@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="upload">
+  <h1>{{ t.m("index.headline") }}</h1>
+  <p class="sub">{{ t.m("index.sub") }}</p>
+
+  {% if expired %}
+  <p class="notice">{{ t.m("index.expired") }}</p>
+  {% endif %}
+  {% if let Some(message) = error %}
+  <p class="error">{{ message }}</p>
+  {% endif %}
+
+  <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+    <label id="dropzone" for="file-input">
+      <span class="drop-icon">📄</span>
+      <span>{{ t.m("index.drop_hint") }}</span>
+      <input id="file-input" type="file" name="file" accept=".csv,text/csv">
+    </label>
+    <button type="submit">{{ t.m("index.submit") }}</button>
+  </form>
+
+  <p class="hint">{{ t.m("index.export_hint") }}</p>
+</section>
+{% endblock %}

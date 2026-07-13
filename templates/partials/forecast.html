@@ -1,0 +1,9 @@
+{% if fc.available %}
+<dl class="facts">
+  <div class="highlight"><dt>{{ t.m("forecast.result") }}</dt><dd>{{ fc.km }}</dd></div>
+</dl>
+<p class="hint">{{ fc.confidence }}</p>
+<div class="chart" data-chart="{{ fc.chart }}"></div>
+{% else %}
+<p class="notice">{{ t.m("forecast.unavailable") }}</p>
+{% endif %}

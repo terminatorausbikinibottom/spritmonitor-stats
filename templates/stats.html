@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="meta">
+  <h1>{{ t.m("stats.title") }}</h1>
+  <p class="sub">
+    {{ t.m("stats.period") }}: {{ v.period_label }} ·
+    {{ v.fueling_count }} {{ t.m("stats.fuelings") }} ·
+    {{ t.m("stats.total_km") }}: {{ v.total_km }} ·
+    {{ t.m("stats.as_of") }} {{ v.anchor_label }}
+  </p>
+  <p><a href="/">{{ t.m("nav.upload_new") }}</a></p>
+</section>
+
+<section class="cards">
+  <div class="card highlight">
+    <span class="card-label">{{ t.m("card.trailing") }}</span>
+    <span class="card-value">{{ v.trailing_km }}</span>
+    {% if v.trailing_extrapolated %}
+    <span class="card-note">{{ t.m("card.trailing_extrapolated") }}</span>
+    {% endif %}
+  </div>
+  <div class="card">
+    <span class="card-label">{{ t.m("card.consumption") }}</span>
+    <span class="card-value">{{ v.overall_consumption }}</span>
+  </div>
+  <div class="card">
+    <span class="card-label">{{ t.m("card.cost_per_km") }}</span>
+    <span class="card-value">{{ v.cost_per_km }}</span>
+  </div>
+  <div class="card">
+    <span class="card-label">{{ t.m("card.total_spend") }}</span>
+    <span class="card-value">{{ v.total_spend }}</span>
+  </div>
+</section>
+
+<section class="panel" id="insurance-panel">
+  <h2>{{ t.m("section.insurance") }}</h2>
+  <label class="inline-control">
+    {{ t.m("insurance.anniversary_label") }}
+    <input type="date" name="anniversary" value="{{ ins.input_value }}"
+           hx-get="/partials/insurance" hx-target="#insurance-body" hx-trigger="change">
+  </label>
+  <div id="insurance-body">
+    {% include "partials/insurance.html" %}
+  </div>
+</section>
+
+<section class="panel" id="forecast-panel">
+  <h2>{{ t.m("section.forecast") }}</h2>
+  <label class="inline-control">
+    {{ t.m("forecast.window_label") }}
+    <select name="months" hx-get="/partials/forecast" hx-target="#forecast-body" hx-trigger="change">
+      <option value="6" {% if fc.months == 6 %}selected{% endif %}>6 {{ t.m("forecast.months") }}</option>
+      <option value="12" {% if fc.months == 12 %}selected{% endif %}>12 {{ t.m("forecast.months") }}</option>
+      <option value="24" {% if fc.months == 24 %}selected{% endif %}>24 {{ t.m("forecast.months") }}</option>
+    </select>
+  </label>
+  <div id="forecast-body">
+    {% include "partials/forecast.html" %}
+  </div>
+</section>
+
+<section class="panel">
+  <h2>{{ t.m("section.calendar") }}</h2>
+  <div class="split">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ t.m("table.year") }}</th>
+          <th class="num">{{ t.m("table.km") }}</th>
+          <th class="num">{{ t.m("table.annualized") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in v.calendar_rows %}
+        <tr>
+          <td>{{ row.year }}{% if !row.full_year %} <small>({{ t.m("table.partial") }})</small>{% endif %}</td>
+          <td class="num">{{ row.km }}</td>
+          <td class="num">{{ row.annualized }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="chart" data-chart="{{ v.calendar_chart }}"></div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>{{ t.m("section.consumption") }}</h2>
+  {% if v.has_consumption %}
+  <dl class="facts">
+    <div><dt>{{ t.m("card.consumption") }}</dt><dd>{{ v.overall_consumption }}</dd></div>
+    <div><dt>{{ t.m("consumption.rolling") }}</dt><dd>{{ v.rolling_last }}</dd></div>
+    <div><dt>{{ t.m("consumption.best") }}</dt><dd>{{ v.best_label }}</dd></div>
+    <div><dt>{{ t.m("consumption.worst") }}</dt><dd>{{ v.worst_label }}</dd></div>
+    {% if v.excluded_windows > 0 %}
+    <div><dt>{{ t.m("consumption.excluded") }}</dt><dd>{{ v.excluded_windows }}</dd></div>
+    {% endif %}
+  </dl>
+  <div class="chart" data-chart="{{ v.consumption_chart }}"></div>
+  {% else %}
+  <p class="notice">{{ t.m("consumption.unavailable") }}</p>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <h2>{{ t.m("section.costs") }}</h2>
+  <dl class="facts">
+    <div><dt>{{ t.m("card.total_spend") }}</dt><dd>{{ v.total_spend }}</dd></div>
+    {% if !v.total_adblue.is_empty() %}
+    <div><dt>{{ t.m("costs.adblue") }}</dt><dd>{{ v.total_adblue }}</dd></div>
+    {% endif %}
+    <div><dt>{{ t.m("costs.quantity") }}</dt><dd>{{ v.total_quantity }}</dd></div>
+    <div><dt>{{ t.m("costs.price_min") }}</dt><dd>{{ v.price_min }}</dd></div>
+    <div><dt>{{ t.m("costs.price_max") }}</dt><dd>{{ v.price_max }}</dd></div>
+    <div><dt>{{ t.m("costs.price_latest") }}</dt><dd>{{ v.price_latest }}</dd></div>
+  </dl>
+  <div class="split">
+    <table>
+      <thead>
+        <tr><th>{{ t.m("table.year") }}</th><th class="num">{{ t.m("table.spend") }}</th></tr>
+      </thead>
+      <tbody>
+        {% for row in v.per_year_rows %}
+        <tr><td>{{ row.0 }}</td><td class="num">{{ row.1 }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="chart" data-chart="{{ v.price_chart }}"></div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>{{ t.m("section.seasonal") }}</h2>
+  <div class="grid-2">
+    {% call group_table(t.m("seasonal.tires"), v.tires_rows) %}
+    {% call group_table(t.m("seasonal.season"), v.season_rows) %}
+    {% call group_table(t.m("seasonal.style"), v.style_rows) %}
+    {% call group_table(t.m("seasonal.roads"), v.roads_rows) %}
+  </div>
+  <p class="hint">{{ t.m("seasonal.roads_note") }}</p>
+</section>
+
+<section class="panel">
+  <h2>{{ t.m("section.behavior") }}</h2>
+  <dl class="facts">
+    <div><dt>{{ t.m("behavior.count") }}</dt><dd>{{ v.fueling_count }}</dd></div>
+    <div><dt>{{ t.m("behavior.avg_km") }}</dt><dd>{{ v.avg_km_between }}</dd></div>
+    <div><dt>{{ t.m("behavior.median_km") }}</dt><dd>{{ v.median_km_between }}</dd></div>
+    <div><dt>{{ t.m("behavior.avg_days") }}</dt><dd>{{ v.avg_days_between }}</dd></div>
+    <div><dt>{{ t.m("behavior.avg_fill") }}</dt><dd>{{ v.avg_fill }}</dd></div>
+    <div><dt>{{ t.m("behavior.tank_range") }}</dt><dd>{{ v.tank_range }}</dd></div>
+  </dl>
+  <div class="grid-2">
+    {% call station_table(t.m("behavior.top_companies"), v.top_companies) %}
+    {% call station_table(t.m("behavior.top_locations"), v.top_locations) %}
+  </div>
+</section>
+
+{% if !v.warnings.is_empty() %}
+<details class="panel warnings">
+  <summary>{{ t.m("section.warnings") }} ({{ v.warnings.len() }})</summary>
+  <ul>
+    {% for warning in v.warnings %}
+    <li>{{ warning }}</li>
+    {% endfor %}
+  </ul>
+</details>
+{% endif %}
+{% endblock %}
+
+{% macro group_table(title, rows) %}
+<div>
+  <h3>{{ title }}</h3>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th class="num">{{ t.m("table.consumption") }}</th>
+        <th class="num">{{ t.m("table.delta") }}</th>
+        <th class="num">{{ t.m("table.share") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.label }}</td>
+        <td class="num">{{ row.consumption }}</td>
+        <td class="num">{{ row.delta }}</td>
+        <td class="num">{{ row.share }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endmacro %}
+
+{% macro station_table(title, rows) %}
+<div>
+  <h3>{{ title }}</h3>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th class="num">{{ t.m("table.visits") }}</th>
+        <th class="num">{{ t.m("table.spend") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.name }}</td>
+        <td class="num">{{ row.visits }}</td>
+        <td class="num">{{ row.spend }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endmacro %}

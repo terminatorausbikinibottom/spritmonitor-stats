@@ -1,0 +1,346 @@
+_version: 2
+
+app.title:
+  en: "Spritmonitor Statistics"
+  de: "Spritmonitor-Statistik"
+nav.upload_new:
+  en: "Upload another file"
+  de: "Andere Datei laden"
+
+index.headline:
+  en: "Vehicle statistics from your Spritmonitor export"
+  de: "Fahrzeugstatistik aus deinem Spritmonitor-Export"
+index.sub:
+  en: "Drop the CSV export of your fuelings and get mileage estimates for your insurance, consumption trends and cost analysis. Nothing is stored on the server."
+  de: "Zieh den CSV-Export deiner Betankungen hierher und erhalte Laufleistungs-Schätzungen für die Versicherung, Verbrauchstrends und Kostenanalysen. Auf dem Server wird nichts gespeichert."
+index.drop_hint:
+  en: "Drop your CSV file here or click to choose"
+  de: "CSV-Datei hier ablegen oder klicken zum Auswählen"
+index.submit:
+  en: "Show statistics"
+  de: "Statistik anzeigen"
+index.expired:
+  en: "Your session has expired — please drop your file again."
+  de: "Deine Sitzung ist abgelaufen — bitte lade die Datei erneut."
+index.export_hint:
+  en: "Export at spritmonitor.de: vehicle → fuelings → CSV export."
+  de: "Export auf spritmonitor.de: Fahrzeug → Betankungen → CSV-Export."
+
+error.no_header:
+  en: "No recognizable header row found — is this a Spritmonitor fueling export?"
+  de: "Keine erkennbare Kopfzeile gefunden — ist das ein Spritmonitor-Betankungsexport?"
+error.no_rows:
+  en: "The file contains no readable fueling rows."
+  de: "Die Datei enthält keine lesbaren Betankungszeilen."
+error.csv:
+  en: "The file could not be parsed as CSV."
+  de: "Die Datei konnte nicht als CSV gelesen werden."
+error.too_large:
+  en: "The file is too large."
+  de: "Die Datei ist zu groß."
+error.no_file:
+  en: "No file received — please choose a CSV file."
+  de: "Keine Datei empfangen — bitte eine CSV-Datei auswählen."
+
+warning.line:
+  en: "Line"
+  de: "Zeile"
+warning.encoding:
+  en: "File was not UTF-8 encoded; decoded as Windows-1252."
+  de: "Datei war nicht UTF-8-kodiert; als Windows-1252 gelesen."
+warning.preamble:
+  en: "Lines before the header row were ignored."
+  de: "Zeilen vor der Kopfzeile wurden ignoriert."
+warning.unknown_column:
+  en: "Unknown column \"%{name}\" was ignored."
+  de: "Unbekannte Spalte \"%{name}\" wurde ignoriert."
+warning.row_skipped:
+  en: "Row skipped — unreadable date \"%{value}\"."
+  de: "Zeile übersprungen — unlesbares Datum \"%{value}\"."
+warning.bad_value:
+  en: "Unreadable value \"%{value}\" in column %{column} was treated as empty."
+  de: "Unlesbarer Wert \"%{value}\" in Spalte %{column} wurde als leer behandelt."
+warning.odometer_reconstructed:
+  en: "Missing odometer reading reconstructed from the trip distance."
+  de: "Fehlender Kilometerstand aus der Strecke rekonstruiert."
+warning.odometer_backwards:
+  en: "Odometer reading goes backwards and was discarded."
+  de: "Kilometerstand läuft rückwärts und wurde verworfen."
+
+stats.title:
+  en: "Statistics"
+  de: "Statistik"
+stats.period:
+  en: "Data range"
+  de: "Datenzeitraum"
+stats.as_of:
+  en: "as of"
+  de: "Stand"
+stats.fuelings:
+  en: "fuelings"
+  de: "Betankungen"
+stats.total_km:
+  en: "Total recorded distance"
+  de: "Erfasste Gesamtstrecke"
+
+card.trailing:
+  en: "Km in the last 12 months"
+  de: "Km in den letzten 12 Monaten"
+card.trailing_extrapolated:
+  en: "Extrapolated — the data covers less than a year."
+  de: "Hochgerechnet — die Daten umfassen weniger als ein Jahr."
+card.consumption:
+  en: "Average consumption"
+  de: "Durchschnittsverbrauch"
+card.cost_per_km:
+  en: "Fuel cost per km"
+  de: "Kraftstoffkosten pro km"
+card.total_spend:
+  en: "Total fuel spend"
+  de: "Gesamtausgaben Kraftstoff"
+
+section.insurance:
+  en: "Insurance year"
+  de: "Versicherungsjahr"
+section.forecast:
+  en: "Mileage forecast"
+  de: "Laufleistungs-Prognose"
+section.calendar:
+  en: "Kilometers per calendar year"
+  de: "Kilometer pro Kalenderjahr"
+section.consumption:
+  en: "Consumption"
+  de: "Verbrauch"
+section.costs:
+  en: "Costs"
+  de: "Kosten"
+section.seasonal:
+  en: "Consumption comparison"
+  de: "Verbrauchsvergleich"
+section.behavior:
+  en: "Fueling behavior"
+  de: "Tankverhalten"
+section.warnings:
+  en: "Import warnings"
+  de: "Import-Hinweise"
+
+insurance.anniversary_label:
+  en: "Policy anniversary (day and month)"
+  de: "Versicherungsbeginn (Tag und Monat)"
+insurance.period:
+  en: "Current insurance year"
+  de: "Laufendes Versicherungsjahr"
+insurance.km_so_far:
+  en: "Driven so far"
+  de: "Bisher gefahren"
+insurance.elapsed:
+  en: "%{elapsed} of %{total} days elapsed"
+  de: "%{elapsed} von %{total} Tagen vergangen"
+insurance.pace:
+  en: "Projected total (average pace)"
+  de: "Prognose Gesamt (bisheriges Tempo)"
+insurance.recent:
+  en: "Projected total (pace of last 90 days)"
+  de: "Prognose Gesamt (Tempo der letzten 90 Tage)"
+insurance.prorated:
+  en: "The insurance year starts before your data does; the pace is measured from the first recorded fueling."
+  de: "Das Versicherungsjahr beginnt vor deinen Daten; das Tempo wird ab der ersten erfassten Betankung gemessen."
+insurance.history_title:
+  en: "Completed insurance years"
+  de: "Abgeschlossene Versicherungsjahre"
+insurance.unavailable:
+  en: "Not enough data for a projection yet."
+  de: "Noch nicht genug Daten für eine Prognose."
+
+forecast.window_label:
+  en: "Regression window"
+  de: "Regressions-Zeitraum"
+forecast.months:
+  en: "months"
+  de: "Monate"
+forecast.result:
+  en: "Forecast for the next 12 months"
+  de: "Prognose für die nächsten 12 Monate"
+forecast.confidence_high:
+  en: "Very steady driving pattern (R² = %{r2}) — this forecast is reliable."
+  de: "Sehr gleichmäßiges Fahrprofil (R² = %{r2}) — die Prognose ist belastbar."
+forecast.confidence_medium:
+  en: "Mostly steady driving pattern (R² = %{r2})."
+  de: "Überwiegend gleichmäßiges Fahrprofil (R² = %{r2})."
+forecast.confidence_low:
+  en: "Irregular driving pattern (R² = %{r2}) — treat this forecast with caution."
+  de: "Unregelmäßiges Fahrprofil (R² = %{r2}) — Prognose mit Vorsicht genießen."
+forecast.unavailable:
+  en: "Not enough readings in this window for a regression (need at least 3 readings across 60 days)."
+  de: "Zu wenige Messpunkte in diesem Zeitraum für eine Regression (mindestens 3 Punkte über 60 Tage nötig)."
+forecast.actual_series:
+  en: "km per month"
+  de: "km pro Monat"
+forecast.pace_series:
+  en: "Regression pace"
+  de: "Regressions-Tempo"
+
+mileage.calendar_series:
+  en: "km"
+  de: "km"
+table.year:
+  en: "Year"
+  de: "Jahr"
+table.km:
+  en: "Distance"
+  de: "Strecke"
+table.annualized:
+  en: "Annualized"
+  de: "Aufs Jahr gerechnet"
+table.partial:
+  en: "partial year"
+  de: "Teiljahr"
+table.consumption:
+  en: "Consumption"
+  de: "Verbrauch"
+table.delta:
+  en: "vs. overall"
+  de: "ggü. Gesamt"
+table.share:
+  en: "Distance share"
+  de: "Streckenanteil"
+table.visits:
+  en: "Visits"
+  de: "Besuche"
+table.spend:
+  en: "Spend"
+  de: "Ausgaben"
+table.period:
+  en: "Period"
+  de: "Zeitraum"
+
+consumption.series:
+  en: "l/100km per fueling"
+  de: "l/100km je Betankung"
+consumption.rolling_series:
+  en: "Rolling average"
+  de: "Gleitender Schnitt"
+consumption.rolling:
+  en: "Rolling average (last 5 windows)"
+  de: "Gleitender Schnitt (letzte 5 Intervalle)"
+consumption.best:
+  en: "Best"
+  de: "Bester Wert"
+consumption.worst:
+  en: "Worst"
+  de: "Schlechtester Wert"
+consumption.excluded:
+  en: "Implausible fueling windows excluded"
+  de: "Unplausible Betankungsintervalle ausgeschlossen"
+consumption.unavailable:
+  en: "No consumption could be computed — full fuelings with odometer readings are required."
+  de: "Kein Verbrauch berechenbar — dafür sind Vollbetankungen mit Kilometerstand nötig."
+
+costs.adblue:
+  en: "AdBlue spend"
+  de: "AdBlue-Ausgaben"
+costs.quantity:
+  en: "Total fuel volume"
+  de: "Getankte Gesamtmenge"
+costs.per_year:
+  en: "Spend per year"
+  de: "Ausgaben pro Jahr"
+costs.price_min:
+  en: "Cheapest price"
+  de: "Günstigster Preis"
+costs.price_max:
+  en: "Most expensive price"
+  de: "Teuerster Preis"
+costs.price_latest:
+  en: "Latest price"
+  de: "Letzter Preis"
+costs.price_series:
+  en: "Price per liter"
+  de: "Preis pro Liter"
+
+seasonal.tires:
+  en: "By tires"
+  de: "Nach Reifen"
+seasonal.season:
+  en: "By season"
+  de: "Nach Jahreszeit"
+seasonal.style:
+  en: "By driving style"
+  de: "Nach Fahrweise"
+seasonal.roads:
+  en: "By road type"
+  de: "Nach Straßentyp"
+seasonal.tires_summer:
+  en: "Summer tires"
+  de: "Sommerreifen"
+seasonal.tires_winter:
+  en: "Winter tires"
+  de: "Winterreifen"
+seasonal.tires_all_year:
+  en: "All-year tires"
+  de: "Ganzjahresreifen"
+seasonal.season_winter:
+  en: "Winter"
+  de: "Winter"
+seasonal.season_spring:
+  en: "Spring"
+  de: "Frühling"
+seasonal.season_summer:
+  en: "Summer"
+  de: "Sommer"
+seasonal.season_autumn:
+  en: "Autumn"
+  de: "Herbst"
+seasonal.style_moderate:
+  en: "Moderate"
+  de: "Moderat"
+seasonal.style_normal:
+  en: "Normal"
+  de: "Normal"
+seasonal.style_fast:
+  en: "Fast"
+  de: "Schnell"
+seasonal.roads_motorway:
+  en: "Motorway"
+  de: "Autobahn"
+seasonal.roads_city:
+  en: "City"
+  de: "Stadt"
+seasonal.roads_country:
+  en: "Country roads"
+  de: "Landstraße"
+seasonal.roads_note:
+  en: "Windows tagged with several road types count towards each of them."
+  de: "Intervalle mit mehreren Straßentypen zählen zu jedem davon."
+
+behavior.count:
+  en: "Fuelings"
+  de: "Betankungen"
+behavior.avg_km:
+  en: "Avg. distance between fuelings"
+  de: "Ø Strecke zwischen Betankungen"
+behavior.median_km:
+  en: "Median distance between fuelings"
+  de: "Median Strecke zwischen Betankungen"
+behavior.avg_days:
+  en: "Avg. days between fuelings"
+  de: "Ø Tage zwischen Betankungen"
+behavior.avg_fill:
+  en: "Avg. fill-up"
+  de: "Ø Tankfüllung"
+behavior.tank_range:
+  en: "Tank range (95th percentile)"
+  de: "Tankreichweite (95. Perzentil)"
+behavior.top_companies:
+  en: "Most visited stations"
+  de: "Meistbesuchte Tankstellen"
+behavior.top_locations:
+  en: "Most visited places"
+  de: "Meistbesuchte Orte"
+
+session.expired:
+  en: "Your session has expired — the uploaded data is gone."
+  de: "Deine Sitzung ist abgelaufen — die geladenen Daten sind weg."
+session.back:
+  en: "Upload the file again"
+  de: "Datei erneut laden"

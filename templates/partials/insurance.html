@@ -1,0 +1,28 @@
+{% if ins.available %}
+<dl class="facts">
+  <div><dt>{{ t.m("insurance.period") }}</dt><dd>{{ ins.period_label }}</dd></div>
+  <div><dt>{{ t.m("insurance.km_so_far") }}</dt><dd>{{ ins.km_so_far }} <small>({{ ins.elapsed_label }})</small></dd></div>
+  <div class="highlight"><dt>{{ t.m("insurance.pace") }}</dt><dd>{{ ins.pace_projection }}</dd></div>
+  {% if !ins.recent_projection.is_empty() %}
+  <div><dt>{{ t.m("insurance.recent") }}</dt><dd>{{ ins.recent_projection }}</dd></div>
+  {% endif %}
+</dl>
+{% if ins.prorated %}
+<p class="hint">{{ t.m("insurance.prorated") }}</p>
+{% endif %}
+{% if !ins.history.is_empty() %}
+<h3>{{ t.m("insurance.history_title") }}</h3>
+<table>
+  <thead>
+    <tr><th>{{ t.m("table.period") }}</th><th class="num">{{ t.m("table.km") }}</th></tr>
+  </thead>
+  <tbody>
+    {% for row in ins.history %}
+    <tr><td>{{ row.label }}</td><td class="num">{{ row.km }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% else %}
+<p class="notice">{{ t.m("insurance.unavailable") }}</p>
+{% endif %}
